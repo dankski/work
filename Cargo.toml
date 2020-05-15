@@ -1,0 +1,8 @@
+[package]
+name = "work"
+version = "0.1.0"
+authors = ["Giacomo Amoroso <giacomo@amoroso.me>"]
+edition = "2018"
+
+[dependencies]
+chrono = "0.4.6"

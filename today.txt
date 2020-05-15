@@ -1,0 +1,4 @@
+08:00 08:15 Worktime for
+08:15 12:00 ALIAM-999
+13:00 15:00 Worktime for
+15:00 17:30 Programming on stuff
