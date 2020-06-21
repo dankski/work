@@ -7,6 +7,7 @@ E.g.$ nano monday-tasks.txt
 08:15 12:00 Refactoring of HTML
 13:00 15:00 Meeting Next Generation Shopping Cart
 15:00 17:30 UX debriefing we George
+17:45 18:00 Refactoring of HTML
 ```
 
 Each line has a start and end time, followed by a description of the activity. To calculate the work of the whole day, simple issue following command in the console.
