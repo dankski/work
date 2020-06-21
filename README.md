@@ -11,7 +11,7 @@ E.g.$ nano monday-tasks.txt
 Each line has a start and end time, followed by a description of the activity. To calculate the work of the whole day, simple issue following command in the console.
 
 $ work monday-tasks.txt
-
+```
 --------------------------------------------------------------
 Simple Report
 --------------------------------------------------------------
@@ -31,3 +31,4 @@ Summarized
 --------------------------------------------------------------
 Total:  8.75
 --------------------------------------------------------------
+```
