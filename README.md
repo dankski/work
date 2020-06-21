@@ -1,5 +1,5 @@
 # work
-Is a simple command line tool for tracking the daily activities. The activities are writen as simple lines in an ordinary  text file.
+Is a simple command line tool for tracking the daily activities. Activities are written as simple lines in an ordinary  text file.
 
 E.g.$ nano monday-tasks.txt
 ```
