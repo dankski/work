@@ -1,7 +1,6 @@
 extern crate chrono;
 
 use chrono::NaiveTime;
-use std::error::Error;
 
 pub fn time_hm(time: &String) -> NaiveTime {
   match NaiveTime::parse_from_str(time, "%H:%M") {
