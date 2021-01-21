@@ -1,4 +1,3 @@
-// use std::error::Error;
 use chrono::NaiveTime;
 use crate::task::utils::time_hm;
 
@@ -59,11 +58,14 @@ pub fn parse_activity_line (line: &str) -> Activity {
     )
 }
 
-pub fn str_duration (activity: &Activity) -> String {
+pub fn str_duration (activity: &Activity) -> Result<String, ActivityError> {
   let span = activity.end().signed_duration_since(activity.start());
+  if span.num_minutes() < 0 {
+    return Err(ActivityError::IllegalTimespanError);
+  }
   let h = (span.num_minutes() / 60) as f64;
   let m = ((span.num_minutes() % 60) as f64) * 0.01666666667;
-  format!("{:.2}", (h + m).abs())
+  Ok(format!("{:.2}", (h + m).abs()))
 }
 
 
@@ -73,24 +75,24 @@ mod tests {
   #[test]
   fn should_calculate_actitivity_duration () {
     let mut activity = Activity::with(&"test".to_string(), &NaiveTime::from_hms(17,0,0), &NaiveTime::from_hms(18,0,0));
-    assert_eq!(str_duration(&activity), "1.00");
+    assert_eq!(str_duration(&activity).ok(), Some("1.00".to_owned()));
 
     activity = Activity::with(&"test".to_string(), &NaiveTime::from_hms(23,0,0), &NaiveTime::from_hms(0,0,0));
-    assert_eq!(str_duration(&activity), "23.00");
+    assert_eq!(str_duration(&activity).ok(), Some("23.00".to_owned()));
   }
 
   #[test]
   fn should_calculate_activity_duration_with_minutes () {
     let mut activity = Activity::with(&"test".to_string(), &NaiveTime::from_hms(17,0,0), &NaiveTime::from_hms(18,45,0));
-    assert_eq!(str_duration(&activity), "1.75");
+    assert_eq!(str_duration(&activity).ok(), Some("1.75".to_owned()));
 
     activity = Activity::with(&"test".to_string(), &NaiveTime::from_hms(17,30,0), &NaiveTime::from_hms(18,00,0));
-    assert_eq!(str_duration(&activity), "0.50");
+    assert_eq!(str_duration(&activity).ok(), Some("0.50".to_owned()));
   }
 
   #[test]
   fn should_calculate_activity_duration_of_five_minutes () {
     let activity = Activity::with(&"test".to_string(), &NaiveTime::from_hms(10,20,0), &NaiveTime::from_hms(10,25,0));
-    assert_eq!(str_duration(&activity), "0.08");
+    assert_eq!(str_duration(&activity).ok(), Some("0.08".to_owned()));
   }
 }

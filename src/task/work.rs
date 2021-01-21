@@ -1,5 +1,5 @@
 use crate::task::activity::str_duration;
-use crate::task::activity::Activity;
+use crate::task::activity::{Activity};
 use std::collections::HashMap;
 
 pub struct Day {
@@ -27,7 +27,7 @@ impl Day {
     self
       .activities
       .iter()
-      .for_each(|a| sp.push_str(&format!("{}\t{}\n", str_duration(&a), a.description())));
+      .for_each(|a| sp.push_str(&format!("{}\t{}\n", str_duration(&a).unwrap(), a.description())));
     sp.push_str("--------------------------------------------------------------\n\n");
     sp.clone()
   }
@@ -49,10 +49,18 @@ impl Day {
     for a in self.activities.iter() {
       if hm.contains_key(&a.description()) {
         let v = hm.get(&a.description()).unwrap_or(&0.0);
-        let sum = v + a.duration();
+        let dur: f64 = match a.duration() {
+            Ok(dur) => dur,
+            Err(why) => panic!("{:?}", why)
+        };
+        let sum = v + dur;
         hm.insert(a.description(), sum);
       } else {
-        hm.insert(a.description(), a.duration());
+        let dur: f64 = match a.duration() {
+          Ok(dur) => dur,
+          Err(why) => panic!("{:?}", why)
+        };
+        hm.insert(a.description(), dur);
       }
     }
 
@@ -63,7 +71,8 @@ impl Day {
   }
 
   fn total_hours(&self) -> String {
-    let s: f64 = self.activities.iter().map(|a| a.duration()).sum();
+    let s: f64 = self.activities.iter().map(|a| a.duration().unwrap()).sum();
+
     println!("{}",s);
     format!("Total:\t{:.2}\n", s)
   }
