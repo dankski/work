@@ -66,14 +66,13 @@ impl Day {
 
     let mut agg = String::new();
     hm.iter()
-      .for_each(|(k, v)| agg.push_str(format!("{:.2}\t{}\n", v, k).as_str()));
+      .for_each(|(k, v)| agg.push_str(format!("{:.3}\t{}\n", v, k).as_str()));
     agg.clone()
   }
 
   fn total_hours(&self) -> String {
     let s: f64 = self.activities.iter().map(|a| a.duration().unwrap()).sum();
 
-    println!("{}",s);
-    format!("Total:\t{:.2}\n", s)
+    format!("Total:\t{:3.3}\n", s)
   }
 }
