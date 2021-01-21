@@ -4,7 +4,7 @@ use chrono::NaiveTime;
 
 pub fn time_hm(time: &String) -> NaiveTime {
   match NaiveTime::parse_from_str(time, "%H:%M") {
-    Ok(NaiveTime) => NaiveTime,
+    Ok(naive_time) => naive_time,
     Err(error) => panic!(
       "There was a problem parsing the time: {}",
       error.to_string()
@@ -35,5 +35,13 @@ mod tests {
     let end = time_hm(&String::from("16:01"));
     let span = end.signed_duration_since(start);
     assert_eq!(span.num_minutes(), 31);
+  }
+
+  #[test]
+  fn should_return_negative_time_span() {
+    let start = time_hm(&String::from("15:30"));
+    let end = time_hm(&String::from("15:00"));
+    let span = end.signed_duration_since(start);
+    assert_eq!(span.num_minutes(), -30);
   }
 }
