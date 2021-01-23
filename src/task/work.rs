@@ -27,7 +27,7 @@ impl Day {
     self
       .activities
       .iter()
-      .for_each(|a| sp.push_str(&format!("{}\t{}\n", str_duration(&a).unwrap(), a.description())));
+      .for_each(|a| sp.push_str(&format!("{}\t{}\n", str_duration(&a).expect(format!("Check line '{}'", a.description()).as_str()), a.description())));
     sp.push_str("--------------------------------------------------------------\n\n");
     sp.clone()
   }
