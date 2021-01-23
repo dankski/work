@@ -65,14 +65,23 @@ impl Day {
     }
 
     let mut agg = String::new();
+
+    let duration_converter = |dur: f64| -> String {
+      let mut value: String = format!("{:.3}", dur);
+      value.truncate(value.len()-1);
+      value
+    };
+
     hm.iter()
-      .for_each(|(k, v)| agg.push_str(format!("{:.3}\t{}\n", v, k).as_str()));
+      .for_each(|(k, v)| agg.push_str(format!("{}\t{}\n", duration_converter(*v), k).as_str()));
+
     agg.clone()
   }
 
   fn total_hours(&self) -> String {
-    let s: f64 = self.activities.iter().map(|a| a.duration().unwrap()).sum();
-
-    format!("Total:\t{:3.3}\n", s)
+    let dur: f64 = self.activities.iter().map(|a| a.duration().unwrap()).sum();
+    let mut value: String = format!("{:.3}", dur);
+    value.truncate(value.len()-1);
+    format!("Total:\t{}\n", value)
   }
 }
